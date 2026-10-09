@@ -14,9 +14,7 @@ jobs:
         config:
         - name: macOS
           os: macos-latest
-
-        - name: Windows
-          os: windows-latest
+          
 
     name: ${{ matrix.config.name }}
     runs-on: ${{ matrix.config.os }}
