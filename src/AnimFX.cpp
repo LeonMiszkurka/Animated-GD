@@ -558,7 +558,7 @@ AnimFX::Particle* AnimFX::spawn(
     p.node = spr;
     p.rgba = spr;
     p.pos = pos;
-    p.vel = { 0, 0 };
+    p.vel = CCPoint(0, 0);
     p.life = life;
     p.sx0 = w0 / cs.width;
     p.sy0 = h0 / cs.height;
@@ -586,9 +586,9 @@ void AnimFX::updateParticles(float dt) {
 
         if (p.drag != 1.f) {
             float k = std::pow(p.drag, dt);
-            p.vel = { p.vel.x * k, p.vel.y * k };
+            p.vel = CCPoint(p.vel.x * k, p.vel.y * k);
         }
-        p.pos = { p.pos.x + p.vel.x * dt, p.pos.y + p.vel.y * dt };
+        p.pos = CCPoint(p.pos.x + p.vel.x * dt, p.pos.y + p.vel.y * dt);
         p.node->setPosition(p.pos);
         p.node->setScaleX(p.sx0 + (p.sx1 - p.sx0) * e);
         p.node->setScaleY(p.sy0 + (p.sy1 - p.sy0) * e);
@@ -630,7 +630,7 @@ void AnimFX::sparkBurst(
             len, 5.f, 3.f, 2.f, life * frand(.7f, 1.15f)
         );
         if (!p) return;
-        p->vel = { std::cos(ang) * speed, std::sin(ang) * speed };
+        p->vel = CCPoint(std::cos(ang) * speed, std::sin(ang) * speed);
         p->drag = .03f;
         p->streak = true;
         p->fadePow = 1.2f;
@@ -646,7 +646,7 @@ void AnimFX::implode(CCPoint pos, ccColor3B color, int count, float radius, floa
             16.f, 5.f, 4.f, 2.f, life
         );
         if (!p) return;
-        p->vel = { -dir.x * radius / life, -dir.y * radius / life };
+        p->vel = CCPoint(-dir.x * radius / life, -dir.y * radius / life);
         p->streak = true;
         p->fadePow = .6f;
     }
@@ -861,8 +861,8 @@ void AnimFX::modeTransition(PlayerObject* player, PlayerState& st, int oldMode, 
         Particle p;
         p.node = label;
         p.rgba = label;
-        p.pos = { pos.x, pos.y + 48.f };
-        p.vel = { 0.f, 60.f };
+        p.pos = CCPoint(pos.x, pos.y + 48.f);
+        p.vel = CCPoint(0.f, 60.f);
         p.life = .9f;
         p.sx0 = p.sy0 = .2f;
         p.sx1 = p.sy1 = .65f;
